@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  direc: MyString
+  tel: MyString
+  schedule: one
+  turn: one
+
+two:
+  name: MyString
+  direc: MyString
+  tel: MyString
+  schedule: two
+  turn: two

@@ -1,0 +1,13 @@
+<h1>Crear nuevo Usuario</h1>
+
+<%= form_for @user do |u| %>
+    <%= u.label :username %>
+    <%= u.text_field :username %>
+    <br>
+    <%= u.label :password %>
+    <%= u.text_field :password %>
+    <br>
+    <%= u.label :role %>
+    <%= u.text_field :role %>
+    <%= u.submit "Crear Usuario" %>
+<% end %>

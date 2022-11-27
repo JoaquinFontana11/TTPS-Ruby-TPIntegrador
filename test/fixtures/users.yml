@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  username: MyString
+  password_digest: MyString
+  branch_office: one
+  role: one
+
+two:
+  username: MyString
+  password_digest: MyString
+  branch_office: two
+  role: two

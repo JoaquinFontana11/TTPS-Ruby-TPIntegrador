@@ -1,0 +1,17 @@
+<div class="border border-black rounded-md bg-indigo-800 h-5/6 w-1/2 p-10 mt-32">
+    <h2 class="text-3xl mb-6"> Logeate </h2>
+    <%= form_tag "/login" do %>
+    <div class="mb-6">
+            Nombre de Usuario: <%= text_field_tag :username %>
+    </div>
+    <div class="mb-6">
+        Contraseña: <%=password_field_tag :password%>
+    </div>
+        <%= submit_tag "Ingresar",class:"bg-rose-500 hover" %>
+    <% end %>
+    <% flash.each do |type, msg| %>
+        <div>
+            <%= msg %>
+        </div>
+    <% end %>
+</div>

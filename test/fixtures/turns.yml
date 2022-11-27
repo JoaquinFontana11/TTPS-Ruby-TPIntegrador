@@ -1,0 +1,21 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  date: 2022-11-26
+  hour: 2022-11-26 18:39:23
+  state: 1
+  reason: MyString
+  comment: MyString
+  string: MyString
+  user: one
+  user: one
+
+two:
+  date: 2022-11-26
+  hour: 2022-11-26 18:39:23
+  state: 1
+  reason: MyString
+  comment: MyString
+  string: MyString
+  user: two
+  user: two
