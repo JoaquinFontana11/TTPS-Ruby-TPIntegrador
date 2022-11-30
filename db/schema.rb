@@ -22,12 +22,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_26_214208) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "roles", force: :cascade do |t|
-    t.string "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "schedules", force: :cascade do |t|
     t.string "monday"
     t.string "tuesday"
@@ -44,7 +38,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_26_214208) do
     t.integer "state"
     t.string "reason"
     t.string "comment"
-    t.string "string"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -54,6 +47,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_26_214208) do
     t.string "password_digest"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "role", limit: 256, null: false
   end
 
 end
