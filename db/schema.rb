@@ -20,8 +20,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_30_185215) do
     t.string "tel"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "schedules_id"
-    t.index ["schedules_id"], name: "index_branch_offices_on_schedules_id", unique: true
+    t.bigint "schedule_id"
+    t.index ["schedule_id"], name: "index_branch_offices_on_schedule_id", unique: true
   end
 
   create_table "schedules", force: :cascade do |t|
@@ -62,7 +62,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_30_185215) do
     t.index ["turns_attended_id"], name: "index_users_on_turns_attended_id"
   end
 
-  add_foreign_key "branch_offices", "schedules", column: "schedules_id"
+  add_foreign_key "branch_offices", "schedules"
   add_foreign_key "schedules", "branch_offices"
   add_foreign_key "turns", "branch_offices"
   add_foreign_key "turns", "users", column: "patient_id"

@@ -1,86 +1,79 @@
 class BranchofficesController < ApplicationController
+  $branch_office_params
+
   def home
-    @branch_offices = BranchOffice.all
-  end
-
-  def new_schedule
-    puts "NEW"
-    puts " -------------------------------------- "
-    puts   params
-    puts " -------------------------------------- "
-    @schedule = Schedule.new
-    render "schedules/new"
-  end
-
-  def create_schedule
-    puts "POST"
-    puts " -------------------------------------- "
-    puts   params[:branch_office_id]
-    puts " -------------------------------------- "
-    @branch_office = BranchOffice.find(params[:branch_office_id])
-    puts "SCHEDULE"
-    puts " -------------------------------------- "
-    puts   @branch_office
-    puts " -------------------------------------- "
-    @schedule = @branch_office.build_schedule(schedule_params)
-    puts " -------------------------------------- "
-    puts   @schedule.save
-    puts " -------------------------------------- "
-    # @schedule = Schedule.new(schedule_params)
-    # if @schedule.save
-    #   redirect_to branchoffice_new_path
-    # else 
-    #   redirect_to schedule_new_path, alert: "Algo salio mal al crear los Horarios"
-    # end
-    # puts " -------------------------------------- "
-    # puts @branch_office.save
-    # puts " -------------------------------------- "
-    # if @branch_office.save
-    #   redirect_to branchoffices_home_path, notice: 'Se ha creado el producto correctamente.'
-    # else
-
-    #   redirect_to branchoffice_new_path, alert: 'Ha ocurrido un error al crear el producto.'
-    # end
+    if helpers.logged_in?
+      @branch_offices = BranchOffice.all
+    else
+      redirect_to login_path
+    end
   end
 
   def new
-    @branch_office = BranchOffice.new
-    puts "NEW"
-    puts " -------------------------------------- "
-    puts   params
-    puts " -------------------------------------- "
+    if helpers.logged_in?
+      @branch_office = BranchOffice.new
+    else
+      redirect_to login_path
+    end
   end
 
   def create
-    @branch_office = BranchOffice.new(branchoffice_params)
-    if @branch_office.save
-      redirect_to schedule_new_path(@branch_office)
-    else 
-      redirect_to branchOffice_new_path, alert: "Algo salio mal al crear los Horarios"
+    if helpers.logged_in?
+      message = validateBranchOfficeInputs
+      puts "-----------------------"
+      puts message
+      puts "-----------------------"
+      if !message
+        $branch_office_params = params[:branchOffice]
+        redirect_to schedule_new_path
+      else
+        redirect_to branchoffice_new_path, alert: message
+      end
+    else
+      redirect_to login_path
     end
-    # puts "CREATE"
-    # puts " -------------------------------------- "
-    # puts @schedule = Schedule.find(params[:branchOffice][:schedule_id])
-    # puts " -------------------------------------- "
-    # puts "PARAMS" 
-    # puts " -------------------------------------- "
-    # puts @schedule
-    # puts " -------------------------------------- "
-    # @branch_office = BranchOffice.new(branchoffice_params)
-    # puts "SUCURSAL" 
-    # puts " -------------------------------------- "
-    # puts @branch_office.schedule
-    # puts " -------------------------------------- "
-    # # @branch_office = @schedule.branch_office.create(branchOffice_params)
-    # puts " -------------------------------------- "
-    # puts @branch_office.save
-    # puts " -------------------------------------- "
-    # if @schedule.save && @branch_office.save
-    #   redirect_to branchoffices_home_path, notice: 'Se ha creado el producto correctamente.'
-    # else
+  end
 
-    #   redirect_to branchoffice_new_path, alert: 'Ha ocurrido un error al crear el producto.'
-    # end
+  def new_schedule
+    if helpers.logged_in?
+      @schedule = Schedule.new
+      render "schedules/new"
+    else
+      redirect_to login_path
+    end
+  end
+
+  def create_schedule
+    if helpers.logged_in?
+      message = validateScheduleInputs
+      if !message
+        @schedule = Schedule.new(schedule_params)
+        if @schedule.save
+          params[:branchOffice] = $branch_office_params
+          $branch_office_params = nil
+          @branch_office = @schedule.build_branch_office(branchoffice_params)
+          if @branch_office.save
+            redirect_to branchoffices_home_path, notice: 'Se ha creado el producto correctamente.'
+          else
+            redirect_to branchoffice_new_path, alert: 'Ha ocurrido un error al crear el producto.'
+          end
+        else
+          redirect_to schedule_new_path, alert: 'Ha ocurrido un error al crear el producto.'
+        end
+      else
+        redirect_to schedule_new_path, alert: message
+      end
+    else
+      redirect_to login_path
+    end
+  end
+
+  def view_schedule
+    @branch_office = BranchOffice.find(params[:format])
+    puts "------------------------------------"
+    puts @branch_office.schedule
+    puts "------------------------------------"
+    render "schedules/view"
   end
   
   private
@@ -91,4 +84,31 @@ class BranchofficesController < ApplicationController
   def schedule_params
     params.require(:schedule).permit(:monday, :tuesday, :wednesday, :thursday, :friday)
   end
+
+
+  def validateScheduleInputs
+    puts "-----------------------"
+    puts params[:schedule].methods
+    puts "-----------------------"
+    if !(params.has_key?(:authenticity_token))
+      return "Estas intentando ingresar por donde no deberias..."
+    elsif !(params.has_key?(:schedule) && params[:schedule].has_key?(:monday) && params[:schedule].has_key?(:tuesday) && params[:schedule].has_key?(:wednesday) && params[:schedule].has_key?(:thursday) && params[:schedule].has_key?(:friday))
+      return "Te falta Ingresar algun Dato"
+    elsif !(params[:schedule][:monday] != "" && params[:schedule][:tuesday] != ""  && params[:schedule][:wednesday] != ""  && params[:schedule][:thursday] != ""  && params[:schedule][:friday] != "")
+      return "Debe completar todos los campos"
+  end
+    return false
+  end
+
+  def validateBranchOfficeInputs
+    if !(params.has_key?(:authenticity_token))
+      return "Estas intentando ingresar por donde no deberias..."
+    elsif !(params.has_key?(:branchOffice) && params[:branchOffice].has_key?(:name) && params[:branchOffice].has_key?(:direc) && params[:branchOffice].has_key?(:tel))
+      return "Te falta Ingresar algun Dato"
+    elsif !(params[:branchOffice][:name] != "" && params[:branchOffice][:direc] != ""  && params[:branchOffice][:tel] != "")
+      return "Debe completar todos los campos"
+  end
+    return false
+  end
+
 end

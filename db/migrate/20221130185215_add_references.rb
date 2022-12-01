@@ -16,6 +16,7 @@ class AddReferences < ActiveRecord::Migration[7.0]
 
     # ------- Referencias a Sucursales -------
     add_reference :branch_offices , :schedules , index: {:unique =>  true }, foreign_key: true
+    rename_column :branch_offices, :schedules_id, :schedule_id
 
     # ------- Referencias a Horarios -------
     add_reference :schedules , :branch_offices , index: {:unique =>  true }, foreign_key: true

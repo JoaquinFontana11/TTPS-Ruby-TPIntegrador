@@ -19,4 +19,5 @@ Rails.application.routes.draw do
   post "/branchoffices/create", to: "branchoffices#create", as: "branchoffice_create"
   get "/schedule/new", to: "branchoffices#new_schedule", as: "schedule_new"
   post "/schedule/create", to: "branchoffices#create_schedule", as: "schedule_create"
+  get "/schedule/view", to: "branchoffices#view_schedule", as: "schedule_view"
 end

@@ -15,7 +15,7 @@ class SessionsController < ApplicationController
         else
             message = "Algo salio mal!. Verifique que su usuario y contraseña sean correctos"
             puts "ERROR"
-            redirect_to login_path, notice: message
+            redirect_to login_path, alert: message
         end
     end
 
