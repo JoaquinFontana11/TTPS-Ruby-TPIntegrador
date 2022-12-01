@@ -4,7 +4,7 @@ class CreateUsers < ActiveRecord::Migration[7.0]
       t.string :username
       t.string :password_digest
       t.string :role
-      t.references :branch_offices, null: true, foreign_key: true
+      # t.belongs_to :branch_offices, null: true, index: true, foreign_key: true
 
       t.timestamps
     end

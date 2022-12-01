@@ -1,0 +1,36 @@
+<div class="block h-[32rem] w-86 p-6 bg-white border border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700 my-12">
+    <h2 class="text-3xl mb-6"> Horarios de la Sucursal </h2>
+    <%= params[:format] %>
+    <%= form_for :schedule, url: "/schedule/create" do|form| %>
+        <%= hidden_field_tag :branch_office_id, params[:format] %>
+    <div class="mb-6">
+            Lunes: <%= form.text_field :monday %>
+    </div>
+    <div class="mb-6">
+        Martes: <%= form.text_field :tuesday %>
+    </div>
+    <div class="mb-6">
+        Miercoles: <%= form.text_field :wednesday %>
+    </div>
+    <div class="mb-6">
+        Jueves: <%= form.text_field :thursday %>
+    </div>
+    <div class="mb-6">
+        Viernes: <%= form.text_field :friday %>
+    </div>
+    <div class="flex justify-center mt-10">
+        <%= form.submit "Cargar Horarios", data: { confirm: "Seguro que quiere modificar su contraseña?" },class:"text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800" %>
+    </div>
+    <% end %>
+    <% flash.each do |type, msg| %>
+        <% if type == "alert"%>
+        <div class="flex justify-center text-red-700 font-bold text-xl">
+            <%= msg %>
+        </div>
+        <% else %>
+            <div class="flex justify-center text-green-700 font-bold text-xl">
+                <%= msg %>
+            </div>
+        <% end %>
+    <% end %>
+</div>

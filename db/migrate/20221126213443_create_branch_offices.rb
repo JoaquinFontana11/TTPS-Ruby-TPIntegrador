@@ -4,8 +4,7 @@ class CreateBranchOffices < ActiveRecord::Migration[7.0]
       t.string :name
       t.string :direc
       t.string :tel
-      t.references :schedule, null: false, foreign_key: true
-      t.references :turn, null: false, foreign_key: true
+      # t.belongs_to :schedule, null: false, index: {unique: true}, foreign_key: true
 
       t.timestamps
     end

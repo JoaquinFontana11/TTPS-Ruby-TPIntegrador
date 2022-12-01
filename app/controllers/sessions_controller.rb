@@ -2,7 +2,11 @@ class SessionsController < ApplicationController
 
     def create
         @user = User.find_by(username: params[:username])
- 
+        puts "-------------------------------------"
+        puts @user.password
+        puts @user.username
+        puts @user.authenticate(params[:password])
+        puts "-------------------------------------"
         if !!@user && @user.authenticate(params[:password])
             session[:user_id] = @user.id
             puts "INGRESADO"

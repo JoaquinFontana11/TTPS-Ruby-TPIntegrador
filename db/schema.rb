@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_26_214208) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_30_185215) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -20,6 +20,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_26_214208) do
     t.string "tel"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "schedules_id"
+    t.index ["schedules_id"], name: "index_branch_offices_on_schedules_id", unique: true
   end
 
   create_table "schedules", force: :cascade do |t|
@@ -30,6 +32,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_26_214208) do
     t.string "friday"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "branch_office_id"
+    t.index ["branch_office_id"], name: "index_schedules_on_branch_office_id", unique: true
   end
 
   create_table "turns", force: :cascade do |t|
@@ -40,14 +44,28 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_26_214208) do
     t.string "comment"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "branch_office_id"
+    t.bigint "patient_id"
+    t.index ["branch_office_id"], name: "index_turns_on_branch_office_id"
+    t.index ["patient_id"], name: "index_turns_on_patient_id", unique: true
   end
 
   create_table "users", force: :cascade do |t|
     t.string "username"
     t.string "password_digest"
+    t.string "role"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "role", limit: 256, null: false
+    t.bigint "branch_offices_id"
+    t.bigint "turns_attended_id"
+    t.index ["branch_offices_id"], name: "index_users_on_branch_offices_id"
+    t.index ["turns_attended_id"], name: "index_users_on_turns_attended_id"
   end
 
+  add_foreign_key "branch_offices", "schedules", column: "schedules_id"
+  add_foreign_key "schedules", "branch_offices"
+  add_foreign_key "turns", "branch_offices"
+  add_foreign_key "turns", "users", column: "patient_id"
+  add_foreign_key "users", "branch_offices", column: "branch_offices_id"
+  add_foreign_key "users", "turns", column: "turns_attended_id"
 end

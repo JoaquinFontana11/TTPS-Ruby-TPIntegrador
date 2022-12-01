@@ -6,7 +6,6 @@ class CreateSchedules < ActiveRecord::Migration[7.0]
       t.string :wednesday
       t.string :thursday
       t.string :friday
-      t.references :branch_office, null: false, foreign_key: true
 
       t.timestamps
     end

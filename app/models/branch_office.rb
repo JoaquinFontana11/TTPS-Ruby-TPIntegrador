@@ -1,4 +1,5 @@
 class BranchOffice < ApplicationRecord
-  belongs_to :schedule
-  belongs_to :turn
+  has_one :schedule, class_name: "Schedule"
+  has_many :turn, foreign_key: true
+  has_many :user, foreign_key: true 
 end
