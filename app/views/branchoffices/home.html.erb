@@ -44,7 +44,8 @@
               <%= branch_office.tel %>
             </td>
             <td class="py-4 px-6">
-              <%= link_to "Horarios", schedule_view_path(branch_office), class: "font-medium text-blue-600 dark:text-blue-500 hover:underline"%>
+              <%= link_to "Horarios", schedule_view_path(branch_office), class: "inline font-medium text-blue-600 hover:underline"%>
+               <%= button_to "Eliminar", branchoffice_destroy_path(branch_office), method: :delete, class: "inline font-medium text-red-600 hover:underline" %>
             </td>
           </tr>
         <% end %>      

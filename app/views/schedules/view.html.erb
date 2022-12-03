@@ -1,0 +1,93 @@
+<div class="p-10"> 
+
+    <% flash.each do |type, msg| %>
+        <% if type == "alert"%>
+        <div class="flex justify-center text-red-700 font-bold text-xl">
+            <%= msg %>
+        </div>
+        <% else %>
+            <div class="flex justify-center text-green-700 font-bold text-xl">
+                <%= msg %>
+            </div>
+        <% end %>
+    <% end %>
+
+    <div class="text-2xl text-gray-900 font-bold flex justify-center">
+        <h1>Horarios de la Sucursal: <%= @branch_office.name %></h1>
+    </div>
+
+    <div class="overflow-x-auto relative shadow-md sm:rounded-lg my-8">
+        <table class="w-full text-sm text-left text-gray-500">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-100 ">
+            <tr>
+            <th scope="col" class="py-3 px-6">
+                Lunes
+            </th>
+            <th scope="col" class="py-3 px-6">
+                Martes
+            </th>
+            <th scope="col" class="py-3 px-6">
+                Miercoles
+            </th>
+            <th scope="col" class="py-3 px-6">
+                Jueves
+            </th>
+            <th scope="col" class="py-3 px-6">
+                Viernes
+            </th>
+            <th scope="col" class="py-3 px-6">
+                Sabado
+            </th>
+            <th scope="col" class="py-3 px-6">
+                Domingo
+            </th>
+            <th scope="col" class="py-3 px-6">
+                Acciones
+            </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                <td class="py-4 px-6">
+                    <%= @schedule.mondayInit.strftime('%R') %>
+                    <span>A</span>
+                    <%= @schedule.mondayFinish.strftime('%R') %>
+                </td>
+                <td class="py-4 px-6">
+                    <%= @schedule.tuesdayInit.strftime('%R') %>
+                    <span>A</span>
+                    <%= @schedule.tuesdayFinish.strftime('%R') %>
+                </td>
+                <td class="py-4 px-6">
+                    <%= @schedule.wednesdayInit.strftime('%R') %>
+                    <span>A</span>
+                    <%= @schedule.wednesdayFinish.strftime('%R') %>
+                </td>
+                <td class="py-4 px-6">
+                    <%= @schedule.thursdayInit.strftime('%R') %>
+                    <span>A</span>
+                    <%= @schedule.thursdayFinish.strftime('%R') %>
+                </td>
+                <td class="py-4 px-6">
+                    <%= @schedule.fridayInit.strftime('%R') %>
+                    <span>A</span>
+                    <%= @schedule.fridayFinish.strftime('%R') %>
+                </td>
+                <td class="py-4 px-6">
+                    <%= @schedule.saturdayInit.strftime('%R') %>
+                    <span>A</span>
+                    <%= @schedule.saturdayFinish.strftime('%R') %>
+                </td>
+                <td class="py-4 px-6">
+                    <%= @schedule.sundayInit.strftime('%R') %>
+                    <span>A</span>
+                    <%= @schedule.sundayFinish.strftime('%R') %>
+                </td>
+                <td class="py-4 px-6">
+                    <%= link_to "Editar", schedule_edit_path(@schedule), class: "font-medium text-blue-600 dark:text-blue-500 hover:underline"%>
+                </td>
+            </tr>
+        </tbody>
+        </table>
+    </div>
+</div>

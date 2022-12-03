@@ -25,11 +25,20 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_30_185215) do
   end
 
   create_table "schedules", force: :cascade do |t|
-    t.string "monday"
-    t.string "tuesday"
-    t.string "wednesday"
-    t.string "thursday"
-    t.string "friday"
+    t.time "mondayInit"
+    t.time "mondayFinish"
+    t.time "tuesdayInit"
+    t.time "tuesdayFinish"
+    t.time "wednesdayInit"
+    t.time "wednesdayFinish"
+    t.time "thursdayInit"
+    t.time "thursdayFinish"
+    t.time "fridayInit"
+    t.time "fridayFinish"
+    t.time "saturdayInit"
+    t.time "saturdayFinish"
+    t.time "sundayInit"
+    t.time "sundayFinish"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "branch_office_id"

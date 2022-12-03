@@ -1,0 +1,133 @@
+<%= form_for :schedule, url: url do|form| %>
+        <%= hidden_field_tag :format_id, params[:format] %>
+        <% if url == "/schedule/create" %>
+            <div class="flex gap-5">
+                <div>
+                    <div class="mb-6 flex flex-col items-center">
+                        <p class="text-xl text-gray-900 mb-2">Lunes</p>
+                        <div class="flex justify-center">
+                            <%= form.time_field :mondayInit, value: schedule.mondayInit, class: "inline h-10" %>
+                            <span class="text-lg px-2">Hasta</span>
+                            <%= form.time_field :mondayFinish, value: schedule.mondayFinish, class: "inline h-10" %>
+                        </div>
+                    </div>
+                    <div class="mb-6 flex flex-col items-center">
+                        <p class="text-xl text-gray-900 mb-2">Martes</p>
+                        <div class="flex justify-center">
+                            <%= form.time_field :tuesdayInit, value: schedule.tuesdayInit, class: "inline h-10" %>
+                            <span class="text-lg px-2">Hasta</span>
+                            <%= form.time_field :tuesdayFinish, value: schedule.tuesdayFinish, class: "inline h-10" %>
+                        </div>
+                    </div>
+                    <div class="mb-6 flex flex-col items-center">
+                        <p class="text-xl text-gray-900 mb-2">Miercoles</p>
+                        <div class="flex justify-center">
+                            <%= form.time_field :wednesdayInit, value: schedule.wednesdayInit, class: "inline h-10" %>
+                            <span class="text-lg px-2">Hasta</span>
+                            <%= form.time_field :wednesdayFinish, value: schedule.wednesdayFinish, class: "inline h-10" %>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="mb-6 flex flex-col items-center">
+                        <p class="text-xl text-gray-900 mb-2">Jueves</p>
+                        <div class="flex justify-center">
+                            <%= form.time_field :thursdayInit, value: schedule.thursdayInit, class: "inline h-10" %>
+                            <span class="text-lg px-2">Hasta</span>
+                            <%= form.time_field :thursdayFinish, value: schedule.thursdayFinish, class: "inline h-10" %>
+                        </div>
+                    </div>
+                    <div class="mb-6 flex flex-col items-center">
+                        <p class="text-xl text-gray-900 mb-2">Viernes</p>
+                        <div class="flex justify-center">
+                            <%= form.time_field :fridayInit, value: schedule.fridayInit, class: "inline h-10" %>
+                            <span class="text-lg px-2">Hasta</span>
+                            <%= form.time_field :fridayFinish, value: schedule.fridayFinish, class: "inline h-10" %>
+                        </div>
+                    </div>
+                    <div class="mb-6 flex flex-col items-center">
+                        <p class="text-xl text-gray-900 mb-2">Sabado</p>
+                        <div class="flex justify-center">
+                            <%= form.time_field :saturdayInit, value: schedule.saturdayInit, class: "inline h-10" %>
+                            <span class="text-lg px-2">Hasta</span>
+                            <%= form.time_field :saturdayFinish, value: schedule.saturdayFinish, class: "inline h-10" %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-6 flex flex-col items-center">
+                <p class="text-xl text-gray-900 mb-2">Domingo</p>
+                    <div class="flex justify-center">
+                        <%= form.time_field :sundayInit, value: schedule.sundayInit, class: "inline h-10" %>
+                        <span class="text-lg px-2">Hasta</span>
+                        <%= form.time_field :sundayFinish, value: schedule.sundayFinish, class: "inline h-10" %>
+                    </div>
+            </div>
+        <% else %>
+            <div class="flex gap-5">
+                <div>
+                    <div class="mb-6 flex flex-col items-center">
+                        <p class="text-xl text-gray-900 mb-2">Lunes</p>
+                        <div class="flex justify-center">
+                            <%= form.time_field :mondayInit, value: schedule.mondayInit.strftime('%R'), class: "inline h-10" %>
+                            <span class="text-lg px-2">Hasta</span>
+                            <%= form.time_field :mondayFinish, value: schedule.mondayFinish.strftime('%R'), class: "inline h-10" %>
+                        </div>
+                    </div>
+                    <div class="mb-6 flex flex-col items-center">
+                        <p class="text-xl text-gray-900 mb-2">Martes</p>
+                        <div class="flex justify-center">
+                            <%= form.time_field :tuesdayInit, value: schedule.tuesdayInit.strftime('%R'), class: "inline h-10" %>
+                            <span class="text-lg px-2">Hasta</span>
+                            <%= form.time_field :tuesdayFinish, value: schedule.tuesdayFinish.strftime('%R'), class: "inline h-10" %>
+                        </div>
+                    </div>
+                    <div class="mb-6 flex flex-col items-center">
+                        <p class="text-xl text-gray-900 mb-2">Miercoles</p>
+                        <div class="flex justify-center">
+                            <%= form.time_field :wednesdayInit, value: schedule.wednesdayInit.strftime('%R'), class: "inline h-10" %>
+                            <span class="text-lg px-2">Hasta</span>
+                            <%= form.time_field :wednesdayFinish, value: schedule.wednesdayFinish.strftime('%R'), class: "inline h-10" %>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="mb-6 flex flex-col items-center">
+                        <p class="text-xl text-gray-900 mb-2">Jueves</p>
+                        <div class="flex justify-center">
+                            <%= form.time_field :thursdayInit, value: schedule.thursdayInit.strftime('%R'), class: "inline h-10" %>
+                            <span class="text-lg px-2">Hasta</span>
+                            <%= form.time_field :thursdayFinish, value: schedule.thursdayFinish.strftime('%R'), class: "inline h-10" %>
+                        </div>
+                    </div>
+                    <div class="mb-6 flex flex-col items-center">
+                        <p class="text-xl text-gray-900 mb-2">Viernes</p>
+                        <div class="flex justify-center">
+                            <%= form.time_field :fridayInit, value: schedule.fridayInit.strftime('%R'), class: "inline h-10" %>
+                            <span class="text-lg px-2">Hasta</span>
+                            <%= form.time_field :fridayFinish, value: schedule.fridayFinish.strftime('%R'), class: "inline h-10" %>
+                        </div>
+                    </div>
+                    <div class="mb-6 flex flex-col items-center">
+                        <p class="text-xl text-gray-900 mb-2">Sabado</p>
+                        <div class="flex justify-center">
+                            <%= form.time_field :saturdayInit, value: schedule.saturdayInit.strftime('%R'), class: "inline h-10" %>
+                            <span class="text-lg px-2">Hasta</span>
+                            <%= form.time_field :saturdayFinish, value: schedule.saturdayFinish.strftime('%R'), class: "inline h-10" %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-6 flex flex-col items-center">
+                <p class="text-xl text-gray-900 mb-2">Domingo</p>
+                    <div class="flex justify-center">
+                        <%= form.time_field :sundayInit, value: schedule.sundayInit.strftime('%R'), class: "inline h-10" %>
+                        <span class="text-lg px-2">Hasta</span>
+                        <%= form.time_field :sundayFinish, value: schedule.sundayFinish.strftime('%R'), class: "inline h-10" %>
+                    </div>
+            </div>
+        <% end %>
+        <div class="flex justify-center mt-10">
+            <%= form.submit "Cargar Horarios", data: { confirm: "Seguro que quiere modificar su contraseña?" },class:"text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800" %>
+        </div>
+    <% end %>
