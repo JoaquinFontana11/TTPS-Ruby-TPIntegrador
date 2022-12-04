@@ -65,9 +65,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_30_185215) do
     t.string "role"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "branch_offices_id"
+    t.bigint "branch_office_id"
     t.bigint "turns_attended_id"
-    t.index ["branch_offices_id"], name: "index_users_on_branch_offices_id"
+    t.index ["branch_office_id"], name: "index_users_on_branch_office_id"
     t.index ["turns_attended_id"], name: "index_users_on_turns_attended_id"
   end
 
@@ -75,6 +75,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_30_185215) do
   add_foreign_key "schedules", "branch_offices"
   add_foreign_key "turns", "branch_offices"
   add_foreign_key "turns", "users", column: "patient_id"
-  add_foreign_key "users", "branch_offices", column: "branch_offices_id"
+  add_foreign_key "users", "branch_offices"
   add_foreign_key "users", "turns", column: "turns_attended_id"
 end

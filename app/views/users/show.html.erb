@@ -1,0 +1,55 @@
+<div class="p-10">
+  <% flash.each do |type, msg| %>
+    <% if type == "alert"%>
+    <div class="flex justify-center text-red-700 font-bold text-xl">
+        <%= msg %>
+    </div>
+    <% else %>
+        <div class="flex justify-center text-green-700 font-bold text-xl">
+            <%= msg %>
+        </div>
+    <% end %>
+  <% end %>
+
+  <div class="overflow-x-auto relative shadow-md sm:rounded-lg my-8">
+    <table class="w-full text-sm text-left text-gray-500">
+      <thead class="text-xs text-gray-700 uppercase bg-gray-100 ">
+        <tr>
+          <th scope="col" class="py-3 px-6">
+            Nombre
+          </th>
+          <th scope="col" class="py-3 px-6">
+            Rol
+          </th>
+        <th scope="col" class="py-3 px-6">
+            Sucursal en la que Trabaja
+          </th>
+          <th scope="col" class="py-3 px-6">
+            Acciones
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+            <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+              <%= @user.username %>
+            </th>
+            <td class="py-4 px-6">
+              <%= @user.role %>
+            </td>
+            <td class="py-4 px-6">
+                <% if @user.branch_office_id? %>
+                    <%= @user.branch_office %>
+                <% else %>
+                    <span>No trabaja en ninguna Sucursal</span>
+                <% end %>
+            </td>
+            <td class="py-4 px-6">
+              <%= link_to "Editar", user_edit_path(@user), class: "inline font-medium text-blue-600 hover:underline"%>
+              <%= button_to "Eliminar", user_destroy_path(@user), class: "inline font-medium text-red-600 hover:underline"%>
+            </td>
+          </tr>  
+      </tbody>
+    </table>
+  </div>
+</div>

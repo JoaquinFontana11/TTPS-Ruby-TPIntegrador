@@ -2,6 +2,7 @@ class AddReferences < ActiveRecord::Migration[7.0]
   def change
     # ------- Referencias a Usuarios -------
     add_reference :users, :branch_offices , index: true, foreign_key: true
+    rename_column :users, :branch_offices_id, :branch_office_id 
 
     add_reference :users, :turns, index: true, foreign_key: true
     rename_column :users, :turns_id, :turns_attended_id

@@ -1,13 +1,15 @@
-<h1>Crear nuevo Usuario</h1>
-
-<%= form_for @user do |u| %>
-    <%= u.label :username %>
-    <%= u.text_field :username %>
-    <br>
-    <%= u.label :password %>
-    <%= u.text_field :password %>
-    <br>
-    <%= u.label :role %>
-    <%= u.text_field :role %>
-    <%= u.submit "Crear Usuario" %>
-<% end %>
+<div class="block h-96 w-86 p-6 bg-white border border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700 my-12">
+    <h2 class="text-3xl mb-6"> Nueva Sucursal </h2>
+    <%= render "users/form", user: @user , url: "/user/create" %>
+    <% flash.each do |type, msg| %>
+        <% if type == "alert"%>
+        <div class="flex justify-center text-red-700 font-bold text-xl">
+            <%= msg %>
+        </div>
+        <% else %>
+            <div class="flex justify-center text-green-700 font-bold text-xl">
+                <%= msg %>
+            </div>
+        <% end %>
+    <% end %>
+</div>

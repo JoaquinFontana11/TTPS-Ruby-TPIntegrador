@@ -25,6 +25,10 @@ class SessionsController < ApplicationController
     end
 
     def home
-        @user = helpers.current_user
+        if helpers.logged_in?
+            @user = helpers.current_user
+        else
+            redirect_to login_path
+        end
     end
 end

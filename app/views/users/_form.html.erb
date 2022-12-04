@@ -1,0 +1,24 @@
+<%= form_for :user, url: url do|form| %>
+    <div class="mb-6">
+            Nombre: <%= form.text_field :username %>
+    </div>
+    <div class="mb-6">
+        Contraseña: <%= form.text_field :password %>
+    </div>
+    <div data-controller="form-element">
+        <%= form.button "Validar", formaction: new_user_path, formmethod: :get, data: {turbo_frame: :branch_office_field, form_element_target: "validate_staff"} %>
+        <div class="mb-6">
+            Rol: <%= form.select :role, User.roles,{include_blank: true}, {data: {action: "change->form-element#remoteValidate"}} %>
+        </div>
+    </div>
+    <%= turbo_frame_tag :branch_office_field do %>
+        <% if user.staff? %>
+            <div class="mb-6">
+                Sucursal: <%= form.text_field :branch_office %>
+            </div>
+        <% end %>
+    <% end %>
+    <div class="flex justify-center mt-10">
+        <%= form.submit "Agregar Sucursal", data: { confirm: "Seguro que quiere modificar su contraseña?" },class:"text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800" %>
+    </div>
+    <% end %>

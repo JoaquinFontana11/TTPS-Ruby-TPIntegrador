@@ -1,16 +1,31 @@
 class UsersController < ApplicationController
 
     def new
-        @user = User.new
+        @user = User.new user_params
+        puts "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
     end
 
     def create
+        @branch_office = BranchOffice.find(params[:user][:branch_office])
+        if !(@branch_office)
+            redirect_to new_user_path, alert: "No existe la Sucursal Seleccionada"
+        end
+        params[:user][:branch_office] = @branch_office
         @user = User.new(user_params)
+
         if @user.save
             session[:user_id] = @user.id
             redirect_to root_path
         else
             render :new
+        end
+    end
+
+    def home
+        if helpers.logged_in?
+            @users = User.all
+          else
+            redirect_to login_path
         end
     end
     
@@ -48,7 +63,7 @@ class UsersController < ApplicationController
     private
 
     def user_params
-        params.require(:user).permit(:username, :password)
+        params.fetch(:user ,  {}).permit(:username, :password, :role, :branch_office)
     end
 
     def validatePasswordInputs
