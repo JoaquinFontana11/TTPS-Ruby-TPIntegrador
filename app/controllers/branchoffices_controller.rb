@@ -1,24 +1,17 @@
 class BranchofficesController < ApplicationController
   $branch_office_params
 
+  before_action :authenticate_user!
+
   def home
-    if helpers.logged_in?
       @branch_offices = BranchOffice.all
-    else
-      redirect_to login_path
-    end
   end
 
   def new
-    if helpers.logged_in?
       @branch_office = BranchOffice.new
-    else
-      redirect_to login_path
-    end
   end
 
   def create
-    if helpers.logged_in?
       message = validateBranchOfficeInputs
       if !message
         $branch_office_params = params[:branchOffice]
@@ -26,13 +19,28 @@ class BranchofficesController < ApplicationController
       else
         redirect_to branchoffice_new_path, alert: message
       end
+  end
+
+  def edit
+    @old_branch_office = BranchOffice.find(params[:id])
+    render "branchoffices/edit"
+  end
+
+  def update
+    message = validateBranchOfficeInputs
+    if !message
+      @branch_office = BranchOffice.find(params[:id])
+      if @branch_office.update(branchoffice_params)
+        redirect_to branchoffices_home_path, notice: "Se modifico correctamente la Sucursal"
+      else
+        redirect_to branchoffice_edit_path, alert: 'Ha ocurrido un error al modificar la sucursal'
+      end
     else
-      redirect_to login_path
+      redirect_to branchoffice_edit_path, alert: message
     end
   end
 
   def destroy
-    if helpers.logged_in?
       puts "---------------------------------------"
       puts params
       puts "---------------------------------------"
@@ -43,22 +51,14 @@ class BranchofficesController < ApplicationController
       else
         redirect_to branchoffices_home_path , alert: "Ocurrio un error al intentar destruir la Sucursal"
       end
-    else
-      redirect_to login_path
-    end
   end
 
   def new_schedule
-    if helpers.logged_in?
       @schedule = Schedule.new
       render "schedules/new"
-    else
-      redirect_to login_path
-    end
   end
 
   def create_schedule
-    if helpers.logged_in?
       message = validateScheduleInputs
       if !message
         @schedule = Schedule.new(schedule_params)
@@ -77,32 +77,20 @@ class BranchofficesController < ApplicationController
       else
         redirect_to schedule_new_path, alert: message
       end
-    else
-      redirect_to login_path
-    end
   end
 
   def view_schedule
-    if helpers.logged_in?
       @branch_office = BranchOffice.find(params[:format])
       @schedule = @branch_office.schedule
       render "schedules/view"
-    else
-      redirect_to login_path
-    end
   end
 
   def edit_schedule
-    if helpers.logged_in?
       @old_schedule = Schedule.find(params[:format])
       render "schedules/edit"
-    else
-      redirect_to login_path
-    end
   end
 
   def update_schedule
-    if helpers.logged_in?
       message = validateScheduleInputs
       if !message
         @schedule = Schedule.find(params[:format_id])
@@ -114,9 +102,6 @@ class BranchofficesController < ApplicationController
       else
         redirect_to schedule_edit_path, alert: message
       end
-    else
-      redirect_to login_path
-    end
   end
   
   private

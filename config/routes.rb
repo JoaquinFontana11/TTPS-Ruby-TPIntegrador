@@ -17,13 +17,16 @@ Rails.application.routes.draw do
   get "/users/home", to: "users#home", as: "users_home"
   get "users/:id", to: "users#show", as: "user_show" 
   get "users/:id/edit", to: "users#edit", as: "user_edit"
-  delete "users/:id", to: "users#show", as: "user_destroy" 
+  post "users/:id/update", to: "users#update", as: "user_update"
+  delete "users/:id", to: "users#destroy", as: "user_destroy" 
 
   get "/updatePassword/:id", to: "users#updatePassword", as: "update_password"
   post "/updatePassword/:id", to: "users#changePasword"
 
   get "/branchoffices/new", to: "branchoffices#new", as: "branchoffice_new"
   post "/branchoffices/create", to: "branchoffices#create", as: "branchoffice_create"
+  get "/branchoffices/:id/edit", to: "branchoffices#edit", as: "branchoffice_edit"
+  post "/branchoffices/:id/update", to: "branchoffices#update"
   delete "/branchoffices/home", to: "branchoffices#destroy", as: "branchoffice_destroy"
 
   get "/schedule/new", to: "branchoffices#new_schedule", as: "schedule_new"
