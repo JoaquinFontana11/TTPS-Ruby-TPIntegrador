@@ -1,0 +1,90 @@
+<div class="p-10">
+  <% flash.each do |type, msg| %>
+    <% if type == "alert"%>
+    <div class="flex justify-center text-red-700 font-bold text-xl">
+        <%= msg %>
+    </div>
+    <% else %>
+        <div class="flex justify-center text-green-700 font-bold text-xl">
+            <%= msg %>
+        </div>
+    <% end %>
+  <% end %>
+
+  <%= link_to "Crear Turno",turn_new_path , class:"text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"%>
+
+  <div class="overflow-x-auto relative shadow-md sm:rounded-lg my-8">
+    <table class="w-full text-sm text-left text-gray-500">
+      <thead class="text-xs text-gray-700 uppercase bg-gray-100 ">
+        <tr>
+          <th scope="col" class="py-3 px-6">
+            Dia
+          </th>
+          <th scope="col" class="py-3 px-6">
+            Hora
+          </th>
+            <th scope="col" class="py-3 px-6">
+            Razon
+          </th>
+            <th scope="col" class="py-3 px-6">
+            Estado
+          </th>
+            <th scope="col" class="py-3 px-6">
+            Comentario
+          </th>
+            <th scope="col" class="py-3 px-6">
+            Paciente
+          </th>
+            <th scope="col" class="py-3 px-6">
+            Personal que lo atendio
+          </th>
+          <th scope="col" class="py-3 px-6">
+            Acciones
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @turns.each do |turn| %>
+          <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+            <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+              <%= turn.date %>
+            </th>
+            <td class="py-4 px-6">
+              <%= turn.hour %>
+            </td>
+            <td class="py-4 px-6">
+              <%= turn.reason %>
+            </td>
+            <td class="py-4 px-6">
+                <% if turn.state == 0%>
+                    <span>Pendiente</span>
+                <% else %>
+                    <span>Atendido</span>
+                <% end %>
+            </td>
+            <td class="py-4 px-6">
+                <% if turn.comment %>
+                    <%= turn.comment %>
+                <% end %>
+            </td>
+            <td class="py-4 px-6">
+              <%= turn.patient.username %>
+            </td>
+        <%
+=begin%>
+<td class="py-4 px-6">
+            <% if turn.staff_attended_id %>
+          <%= turn.user.username %>
+        </td> 
+<%
+=end%>
+            <td class="py-4 px-6">
+              <%= link_to "Detalles", turn_show_path(user), class: "inline font-medium text-blue-600 hover:underline"%>
+            </td>
+            
+          </tr>
+        <% end %>      
+      </tbody>
+    </table>
+  </div>
+</div>

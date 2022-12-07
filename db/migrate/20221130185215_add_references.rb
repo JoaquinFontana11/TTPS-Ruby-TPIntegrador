@@ -4,16 +4,13 @@ class AddReferences < ActiveRecord::Migration[7.0]
     add_reference :users, :branch_offices , index: true, foreign_key: true
     rename_column :users, :branch_offices_id, :branch_office_id 
 
-    add_reference :users, :turns, index: true, foreign_key: true
-    rename_column :users, :turns_id, :turns_attended_id
-
     # ------- Referencias a Turnos -------
     add_reference :turns, :branch_office, index: true, foreign_key: true
 
-
+    add_reference :turns, :patient, index: {unique: true}, foreign_key: {to_table: "users"}
 
     add_reference :turns, :users, index: {unique: true}, foreign_key: true
-    rename_column :turns, :users_id, :patient_id
+    rename_column :turns, :users_id, :staff_attended_id
 
     # ------- Referencias a Sucursales -------
     add_reference :branch_offices , :schedules , index: {:unique =>  true }, foreign_key: true

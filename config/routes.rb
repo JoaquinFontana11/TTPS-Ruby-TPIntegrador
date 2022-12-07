@@ -35,6 +35,10 @@ Rails.application.routes.draw do
   get "/schedule/edit", to: "branchoffices#edit_schedule", as: "schedule_edit"
   post "/schedule/update", to: "branchoffices#update_schedule"
 
+  get "turns/home", to: "turns#home", as: "turns_home"
+  get "turns/new", to: "turns#new", as:"turn_new"
+  post "turns/create", to: "turns#create", as: "turn_create"
+  get "turns/:id", to: "turns#show", as: "turn_show"
 
 
 end

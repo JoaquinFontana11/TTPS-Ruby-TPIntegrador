@@ -55,8 +55,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_30_185215) do
     t.datetime "updated_at", null: false
     t.bigint "branch_office_id"
     t.bigint "patient_id"
+    t.bigint "staff_attended_id"
     t.index ["branch_office_id"], name: "index_turns_on_branch_office_id"
     t.index ["patient_id"], name: "index_turns_on_patient_id", unique: true
+    t.index ["staff_attended_id"], name: "index_turns_on_staff_attended_id", unique: true
   end
 
   create_table "users", force: :cascade do |t|
@@ -66,15 +68,13 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_30_185215) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "branch_office_id"
-    t.bigint "turns_attended_id"
     t.index ["branch_office_id"], name: "index_users_on_branch_office_id"
-    t.index ["turns_attended_id"], name: "index_users_on_turns_attended_id"
   end
 
   add_foreign_key "branch_offices", "schedules"
   add_foreign_key "schedules", "branch_offices"
   add_foreign_key "turns", "branch_offices"
   add_foreign_key "turns", "users", column: "patient_id"
+  add_foreign_key "turns", "users", column: "staff_attended_id"
   add_foreign_key "users", "branch_offices"
-  add_foreign_key "users", "turns", column: "turns_attended_id"
 end

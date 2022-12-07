@@ -1,6 +1,5 @@
 class Turn < ApplicationRecord
-  belongs_to :user
+  belongs_to :patient, class_name: "User", :foreign_key => "patient_id"
+  belongs_to :user, :foreign_key => "staff_attended_id"
   belongs_to :branch_offices
-
-  has_many :user, :foreign_key => "turns_attended_id"
 end

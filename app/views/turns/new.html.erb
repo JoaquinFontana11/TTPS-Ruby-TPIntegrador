@@ -1,0 +1,15 @@
+<div class="block h-[24rem] w-86 p-6 bg-white border border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700 my-12">
+    <h2 class="text-3xl mb-6"> Horarios de la Sucursal </h2>
+     <%= render "turns/form", turn: @turn , url: "/turn/create" %>
+    <% flash.each do |type, msg| %>
+        <% if type == "alert"%>
+        <div class="flex justify-center text-red-700 font-bold text-xl">
+            <%= msg %>
+        </div>
+        <% else %>
+            <div class="flex justify-center text-green-700 font-bold text-xl">
+                <%= msg %>
+            </div>
+        <% end %>
+    <% end %>
+</div>

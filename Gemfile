@@ -73,3 +73,4 @@ end
 
 gem 'ffi', '~> 1.9', '>= 1.9.10'
 gem "tailwindcss-rails", "~> 2.0"
+gem 'cancancan', '~> 1.15'
