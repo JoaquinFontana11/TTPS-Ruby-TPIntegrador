@@ -41,15 +41,23 @@ class BranchofficesController < ApplicationController
   end
 
   def destroy
-      puts "---------------------------------------"
-      puts params
-      puts "---------------------------------------"
-      @branch_office = BranchOffice.find(params[:format])
-      @schedule = @branch_office.schedule
-      if @schedule.destroy
-        redirect_to branchoffices_home_path , notice: "Se elimino la Sucursal Correctamente"
+      if BranchOffice.find(params[:format])
+        @turns = Turn.where(branch_office_id: params[:format])
+        if @turns.size == 0
+          @branch_office = BranchOffice.find(params[:format])
+          @schedule = @branch_office.schedule
+          if @schedule.destroy
+            redirect_to branchoffices_home_path , notice: "Se elimino la Sucursal Correctamente"
+          else
+            redirect_to branchoffices_home_path , alert: "Ocurrio un error al intentar destruir la Sucursal"
+          end
+        else
+          flash[:alert] = "La sucursal tiene turnos"
+          redirect_to branchoffices_home_path and return
+        end
       else
-        redirect_to branchoffices_home_path , alert: "Ocurrio un error al intentar destruir la Sucursal"
+        flash[:alert] = "La sucursal no existe"
+        redirect_to branchoffices_home_path and return
       end
   end
 
