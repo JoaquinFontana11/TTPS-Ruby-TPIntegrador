@@ -29,14 +29,14 @@
             <th scope="col" class="py-3 px-6">
             Estado
           </th>
-            <th scope="col" class="py-3 px-6">
-            Comentario
+          <th scope="col" class="py-3 px-6">
+            Cliente
           </th>
-            <th scope="col" class="py-3 px-6">
-            Paciente
-          </th>
-            <th scope="col" class="py-3 px-6">
+          <th scope="col" class="py-3 px-6">
             Personal que lo atendio
+          </th>
+          <th scope="col" class="py-3 px-6">
+            Comentario
           </th>
           <th scope="col" class="py-3 px-6">
             Acciones
@@ -46,11 +46,11 @@
       <tbody>
         <% @turns.each do |turn| %>
           <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-            <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-              <%= turn.date %>
-            </th>
             <td class="py-4 px-6">
-              <%= turn.hour %>
+              <%= turn.date %>
+            </td>
+            <td class="py-4 px-6">
+              <%= turn.hour.strftime('%R') %>
             </td>
             <td class="py-4 px-6">
               <%= turn.reason %>
@@ -63,25 +63,21 @@
                 <% end %>
             </td>
             <td class="py-4 px-6">
-                <% if turn.comment %>
-                    <%= turn.comment %>
-                <% end %>
+              <%= turn.client.username %>
             </td>
             <td class="py-4 px-6">
-              <%= turn.patient.username %>
+              <% if turn.user %>
+                <%= turn.user.username %>
+              <% end %>
             </td>
-        <%
-=begin%>
-<td class="py-4 px-6">
-            <% if turn.staff_attended_id %>
-          <%= turn.user.username %>
-        </td> 
-<%
-=end%>
             <td class="py-4 px-6">
-              <%= link_to "Detalles", turn_show_path(user), class: "inline font-medium text-blue-600 hover:underline"%>
+              <% if turn.comment %>
+                <%= turn.comment %>
+              <% end %>
             </td>
-            
+            <td class="py-4 px-6">
+              <%= link_to "Detalles", turn_show_path(turn), class: "inline font-medium text-blue-600 hover:underline"%>
+            </td>
           </tr>
         <% end %>      
       </tbody>

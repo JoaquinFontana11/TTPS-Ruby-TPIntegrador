@@ -9,10 +9,12 @@ Rails.application.routes.draw do
 
   resources :users, only: [:new, :create, :updatePassword]
 
-  get "/login", to: "sessions#login"
+  get "/login", to: "sessions#login", as: "login"
   post "/login", to: "sessions#create"
   post "/logout", to: "sessions#destroy"
   get "/logout", to: "sessions#destroy"
+  get "/register", to: "sessions#register", as: "register"
+  post "/register", to: "sessions#create_client"
 
   get "/users/home", to: "users#home", as: "users_home"
   get "users/:id", to: "users#show", as: "user_show" 
@@ -37,8 +39,13 @@ Rails.application.routes.draw do
 
   get "turns/home", to: "turns#home", as: "turns_home"
   get "turns/new", to: "turns#new", as:"turn_new"
-  post "turns/create", to: "turns#create", as: "turn_create"
+  post "turn/create", to: "turns#create", as: "turn_create"
   get "turns/:id", to: "turns#show", as: "turn_show"
+  get "turns/:id/edit", to: "turns#edit", as:"turn_edit"
+  post "turns/:id/update", to: "turns#update", as:"turn_update"
+  get "/turns/:id/attend", to: "turns#attend", as: "turn_attend"
+  post "turns/:id/attended", to: "turns#attended", as: "turn_attended"
+  delete "turns/:id", to: "turns#destroy", as: "turn_destroy"
 
 
 end

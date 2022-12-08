@@ -1,18 +1,15 @@
 <div class="block h-fit w-86 p-6 bg-white border border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700 my-12">
-    <h2 class="text-3xl mb-6"> Iniciar Sesion </h2>
-    <%= form_for :user, url: "/login" do|form| %>
+    <h2 class="text-3xl mb-6"> Registrar Usuario </h2>
+    <%= form_for :user, url: "/register" do|form| %>
     <div class="mb-6">
         Nombre de Usuario: <%= form.text_field :username %>
     </div>
         <div class="mb-6">
         Contraseña: <%= form.password_field :password %>
     </div>
+        <%= form.hidden_field :role, value: "client" %>
     <div class="flex justify-center mt-10">
-        <%= form.submit "Ingresar", data: { confirm: "Seguro que quiere modificar su contraseña?" },class:"text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800" %>
-    </div>
-    <div class="mb-6">
-        No estas registrado?
-        <%= link_to "Registrate!", register_path , class: "inline font-medium text-blue-600 hover:underline"%>
+        <%= form.submit "Registrarse", data: { confirm: "Seguro que quiere modificar su contraseña?" },class:"text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800" %>
     </div>
     <% end %>
     <% flash.each do |type, msg| %>

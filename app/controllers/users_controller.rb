@@ -140,6 +140,7 @@ class UsersController < ApplicationController
         elsif (params[:user][:role] == "staff" && params[:branch_office] == "")
             return "Debe completar la Sucursal"
         end
+        return false
     end
 
 end

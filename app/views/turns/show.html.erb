@@ -1,0 +1,47 @@
+
+<div class="w-80 h-fit p-6 bg-white border border-gray-200 rounded-lg shadow-md m-6 flex items-center flex-col">
+    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Detalles del Turno</h5>
+    <div class="mb-3 font-normal text-gray-800 dark:text-gray-400">
+        <span class="font-semibold text-normal">Dia: </span>
+        <%= @turn.date %>
+    </div>
+    <div class="mb-3 font-normal text-gray-800 dark:text-gray-400">
+        <span class="font-semibold text-normal">Hora: </span> 
+        <%= @turn.hour.strftime("%R") %>
+    </div>
+    <div class="mb-3 font-normal text-gray-800 dark:text-gray-400">
+        <span class="font-semibold text-normal">Razon: </span> 
+        <%= @turn.reason %>
+    </div>
+    <div class="mb-3 font-normal text-gray-800 dark:text-gray-400">
+        <span class="font-semibold text-normal">Estado: </span> 
+        <% if @turn.state == 0%>
+            <span>Pendiente</span>
+        <% else %>
+            <span>Atendido</span>
+        <% end %>
+    </div>
+    <div class="mb-3 font-normal text-gray-800 dark:text-gray-400"> 
+        <span class="font-semibold text-normal">Cliente: </span>  
+        <%= @turn.client.username %>
+    </div>
+    <% if @turn.user %>
+        <div class="mb-3 font-normal text-gray-800 dark:text-gray-400">
+            <span class="font-semibold text-normal">Personal que lo atendio: </span> 
+            <%= @turn.user.username %>
+        </div>
+        <div class="mb-3 font-normal text-gray-800 dark:text-gray-400">
+            <span class="font-semibold text-normal">Comentario: </span>
+            <%= @turn.comment %>
+        </div>
+    <% end %>
+    <div class="flex flex-row gap-3">
+    <% if @turn.state == 0 %>
+        <%= link_to "Editar", turn_edit_path(@turn), class: "inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300"%>
+        <%= button_to "Cancelar", turn_destroy_path(@turn),method: :delete, class: "inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-red-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300"%>
+        <%= link_to "Atender", turn_attend_path(@turn), class: "inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-green-700 rounded-lg hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300"%>
+    <% end %>
+
+
+    </div>
+</div>
