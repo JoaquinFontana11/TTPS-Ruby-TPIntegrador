@@ -1,4 +1,4 @@
-<div class="block h-96 w-86 p-6 bg-white border border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700 my-12">
+<div class="block h-fit w-86 p-6 bg-white border border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700 my-12">
     <h2 class="text-3xl mb-6"> Nueva Sucursal </h2>
         <%= render "branchoffices/form", branch_office: @old_branch_office , url: "/branchoffices/#{@old_branch_office.id}/update" %>
     <% flash.each do |type, msg| %>

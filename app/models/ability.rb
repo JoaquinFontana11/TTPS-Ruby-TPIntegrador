@@ -13,16 +13,23 @@ class Ability
       can :edit, Turn do |turn| 
         turn.client_id == user.id && turn.state == 0 
       end
+      can :update, Turn do |turn| 
+        turn.client_id == user.id && turn.state == 0 
+      end
       can :destroy, Turn do |turn| 
         turn.client_id == user.id && turn.state == 0 
       end
       cannot :attend, Turn
       cannot :attended, Turn
       cannot :manage, User
+      can :updatePassword, User
+      can :changePasword, User
       can :home, BranchOffice
       can :read, BranchOffice
       can :read, Schedule 
     elsif user.staff?
+      can :updatePassword, User
+      can :changePasword, User
       can :home, BranchOffice
       can :read, BranchOffice
       can :read, Schedule

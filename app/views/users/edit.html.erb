@@ -1,4 +1,4 @@
-<div class="block h-96 w-86 p-6 bg-white border border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700 my-12">
+<div class="block h-fit w-86 p-6 bg-white border border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700 my-12">
     <h2 class="text-3xl mb-6"> Modificar Usuario </h2>
     <%= render "users/form", user: @old_user , url: "/users/#{@old_user.id}/update" %>
     <% flash.each do |type, msg| %>

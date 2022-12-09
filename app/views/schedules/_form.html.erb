@@ -1,5 +1,9 @@
 <%= form_for :schedule, url: url do|form| %>
-        <%= hidden_field_tag :format_id, params[:format] %>
+        <%
+=begin%>
+ <%= hidden_field_tag :format_id, params[:format] %> 
+<%
+=end%>
         <span>Ingrese 00:00 Hasta 00:00, si la Sucursal estara cerrada ese dia</span>
         <% if url == "/schedule/create" %>
             <div class="flex gap-5">

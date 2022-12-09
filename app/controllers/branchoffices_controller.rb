@@ -100,23 +100,23 @@ class BranchofficesController < ApplicationController
   end
 
   def view_schedule
-      @branch_office = BranchOffice.find(params[:format])
+      @branch_office = BranchOffice.find(params[:id])
       @schedule = @branch_office.schedule
       render "schedules/view"
   end
 
   def edit_schedule
-      @old_schedule = Schedule.find(params[:format])
+      @old_schedule = Schedule.find(params[:id])
       render "schedules/edit"
   end
 
   def update_schedule
       message = validateScheduleInputs
       if !message
-        @schedule = Schedule.find(params[:format_id])
+        @schedule = Schedule.find(params[:id])
         if @schedule.update(schedule_params)
           flash[:notice] =  "Se modifico correctamente el Horario"
-          redirect_to branchoffices_home_path, notice:
+          redirect_to branchoffices_home_path and return
         else
           flash[:alert] =  'Ha ocurrido un error al modificar el horario'
           redirect_to schedule_edit_path and return
