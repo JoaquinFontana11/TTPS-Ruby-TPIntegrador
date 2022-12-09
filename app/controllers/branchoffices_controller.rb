@@ -1,5 +1,5 @@
 class BranchofficesController < ApplicationController
-  # load_and_authorize_resource
+  load_and_authorize_resource "BranchOffice"
 
   $branch_office_params
 

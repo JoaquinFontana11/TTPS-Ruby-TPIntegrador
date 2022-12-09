@@ -2,11 +2,11 @@
 
     <% flash.each do |type, msg| %>
         <% if type == "alert"%>
-        <div class="flex justify-center text-red-700 font-bold text-xl">
+        <div class="flex justify-center text-red-700 font-bold text-xl p-3">
             <%= msg %>
         </div>
         <% else %>
-            <div class="flex justify-center text-green-700 font-bold text-xl">
+            <div class="flex justify-center text-green-700 font-bold text-xl p-3">
                 <%= msg %>
             </div>
         <% end %>
@@ -84,7 +84,9 @@
                     <%= @schedule.sundayFinish.strftime('%R') %>
                 </td>
                 <td class="py-4 px-6">
-                    <%= link_to "Editar", schedule_edit_path(@schedule), class: "font-medium text-blue-600 dark:text-blue-500 hover:underline"%>
+                    <% if current_user.admin? %>
+                        <%= link_to "Editar", schedule_edit_path(@schedule), class: "font-medium text-blue-600 dark:text-blue-500 hover:underline"%>
+                    <% end %>
                 </td>
             </tr>
         </tbody>

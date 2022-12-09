@@ -1,17 +1,18 @@
 <div class="p-10">
   <% flash.each do |type, msg| %>
     <% if type == "alert"%>
-    <div class="flex justify-center text-red-700 font-bold text-xl">
+    <div class="flex justify-center text-red-700 font-bold text-xl p-3">
         <%= msg %>
     </div>
     <% else %>
-        <div class="flex justify-center text-green-700 font-bold text-xl">
+        <div class="flex justify-center text-green-700 font-bold text-xl p-3">
             <%= msg %>
         </div>
     <% end %>
   <% end %>
-
-  <%= link_to "Crear Turno",turn_new_path , class:"text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"%>
+  <% if current_user.client? %>
+    <%= link_to "Crear Turno",turn_new_path , class:"text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"%>
+  <% end %>
 
   <div class="overflow-x-auto relative shadow-md sm:rounded-lg my-8">
     <table class="w-full text-sm text-left text-gray-500">

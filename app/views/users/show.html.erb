@@ -45,8 +45,10 @@
                 <% end %>
             </td>
             <td class="py-4 px-6">
-              <%= link_to "Editar", user_edit_path(@user), class: "inline font-medium text-blue-600 hover:underline"%>
-              <%= button_to "Eliminar", user_destroy_path(@user),method: :delete, class: "inline font-medium text-red-600 hover:underline"%>
+              <% if current_user.admin? %>
+                <%= link_to "Editar", user_edit_path(@user), class: "inline font-medium text-blue-600 hover:underline"%>
+                <%= button_to "Eliminar", user_destroy_path(@user),method: :delete, class: "inline font-medium text-red-600 hover:underline"%>
+              <% end %>
             </td>
           </tr>  
       </tbody>

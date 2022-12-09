@@ -4,7 +4,11 @@ class UsersController < ApplicationController
     before_action :authenticate_user!
 
     def home
-        @users = User.all
+        if helpers.current_user.staff?
+            @users = User.where("role = 'client'")
+        else
+            @users = User.all
+        end
     end
     
     def show

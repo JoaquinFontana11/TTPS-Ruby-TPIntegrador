@@ -1,3 +1,16 @@
+<div class="flex flex-col">
+  <% flash.each do |type, msg| %>
+    <% if type == "alert"%>
+    <div class="flex justify-center text-red-700 font-bold text-xl">
+        <%= msg %>
+    </div>
+    <% else %>
+        <div class="flex justify-center text-green-700 font-bold text-xl">
+            <%= msg %>
+        </div>
+    <% end %>
+  <% end %>
+
 <div class="block h-80 w-86 p-6 bg-white border border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700 my-12">
     <h1 class="mb-10 font-bold text-2xl text-gray-900 dark:text-white">Datos del Usuario Conectado</h1>
     <div class="mb-2 tracking-tight text-gray-900 dark:text-white">
@@ -11,4 +24,5 @@
     <div class="flex justify-center mt-10">
         <%= link_to "Cambiar Contraseña", update_password_path(@user) , class:"text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"%>
     </div>
+</div>
 </div>

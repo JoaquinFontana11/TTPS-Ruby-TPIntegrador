@@ -4,13 +4,13 @@ class TurnsController < ApplicationController
     def home
         if helpers.current_user.client?
             @turns = Turn.where(
-              'creador_id = ?',
+              'client_id = ?',
               helpers.current_user.id
             ).group(:id)
           elsif helpers.current_user.staff?
             @turns = Turn.where(
-              'sucursal_id = ?',
-              helpers.current_user.sucursal 
+              'branch_office_id = ?',
+              helpers.current_user.branch_office
             ).group(:id)
         #   else
         #     @turns = Turn.all

@@ -37,9 +37,13 @@
     <% end %>
     <div class="flex flex-row gap-3">
     <% if @turn.state == 0 %>
-        <%= link_to "Editar", turn_edit_path(@turn), class: "inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300"%>
-        <%= button_to "Cancelar", turn_destroy_path(@turn),method: :delete, class: "inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-red-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300"%>
-        <%= link_to "Atender", turn_attend_path(@turn), class: "inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-green-700 rounded-lg hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300"%>
+        <% if current_user.client? && current_user.id == @turn.client_id %>
+            <%= link_to "Editar", turn_edit_path(@turn), class: "inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300"%>
+            <%= button_to "Cancelar", turn_destroy_path(@turn),method: :delete, class: "inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-red-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300"%>
+        <% end %>
+        <% if current_user.staff? %>
+            <%= link_to "Atender", turn_attend_path(@turn), class: "inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-green-700 rounded-lg hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300"%>
+        <% end %>
     <% end %>
 
 

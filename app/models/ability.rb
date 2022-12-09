@@ -30,6 +30,7 @@ class Ability
       can :read,  Turn, branch_office_id: user.branch_office_id
       can :attend, Turn, branch_office_id: user.branch_office_id
       can :attended, Turn, branch_office_id: user.branch_office_id
+      can :home, User
       can :read, User, role: "client"
     end
   end
