@@ -1,4 +1,6 @@
 class BranchofficesController < ApplicationController
+  # load_and_authorize_resource
+
   $branch_office_params
 
   before_action :authenticate_user!

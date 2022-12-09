@@ -6,4 +6,13 @@ class ApplicationController < ActionController::Base
         end
     end
 
+    def current_ability
+        @current_ability ||= Ability.new(helpers.current_user)
+    end
+
+    rescue_from CanCan::AccessDenied do |exception|
+        flash[:alert] = "No tenes permisos para acceder a esa funcionalidad"
+        redirect_to root_path
+    end
+
 end

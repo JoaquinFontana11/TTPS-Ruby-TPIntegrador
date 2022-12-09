@@ -1,7 +1,20 @@
 class TurnsController < ApplicationController
+    load_and_authorize_resource
 
     def home
-        @turns = Turn.all
+        if helpers.current_user.client?
+            @turns = Turn.where(
+              'creador_id = ?',
+              helpers.current_user.id
+            ).group(:id)
+          elsif helpers.current_user.staff?
+            @turns = Turn.where(
+              'sucursal_id = ?',
+              helpers.current_user.sucursal 
+            ).group(:id)
+        #   else
+        #     @turns = Turn.all
+          end
         render "turns/home"
     end
 
