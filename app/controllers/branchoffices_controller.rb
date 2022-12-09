@@ -48,7 +48,11 @@ class BranchofficesController < ApplicationController
 
   def destroy
       if BranchOffice.find(params[:format])
-        @turns = Turn.where(branch_office_id: params[:format])
+        Turn.where(
+          'client_id = ?',
+          helpers.current_user.id
+        ).group(:id)
+        @turns = Turn.where("state = 0 and branch_office_id = ?", params[:format])
         if @turns.size == 0
           @branch_office = BranchOffice.find(params[:format])
           @schedule = @branch_office.schedule

@@ -10,6 +10,10 @@
         <%= @turn.hour.strftime("%R") %>
     </div>
     <div class="mb-3 font-normal text-gray-800 dark:text-gray-400">
+        <span class="font-semibold text-normal">Sucursal: </span> 
+        <%= @turn.branch_office.name %>
+    </div>
+    <div class="mb-3 font-normal text-gray-800 dark:text-gray-400">
         <span class="font-semibold text-normal">Razon: </span> 
         <%= @turn.reason %>
     </div>
