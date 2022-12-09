@@ -158,8 +158,11 @@ class TurnsController < ApplicationController
         @dayName = Date.parse(params[:turn][:date]).strftime("%A").downcase
         @initHour = schedule["#{@dayName}Init"].hour
         @finishHour = schedule["#{@dayName}Finish"].hour
-
-        return  @hour.between?(@initHour,@finishHour)
+        if @initHour == 00 && @finishHour == 00
+            return false
+        else
+            return  @hour.between?(@initHour,@finishHour)
+        end
     end
 
     def validateAttendInputs

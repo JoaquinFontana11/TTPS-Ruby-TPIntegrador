@@ -49,39 +49,67 @@
         <tbody>
             <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                 <td class="py-4 px-6">
-                    <%= @schedule.mondayInit.strftime('%R') %>
-                    <span>A</span>
-                    <%= @schedule.mondayFinish.strftime('%R') %>
+                    <% if @schedule.mondayInit.strftime("%R") == "00:00" && @schedule.mondayFinish.strftime("%R") == "00:00" %>
+                        <span>CERRADO</span>
+                    <% else %>
+                        <%= @schedule.mondayInit.strftime('%R') %>
+                        <span>A</span>
+                        <%= @schedule.mondayFinish.strftime('%R') %>
+                    <% end %>
                 </td>
                 <td class="py-4 px-6">
-                    <%= @schedule.tuesdayInit.strftime('%R') %>
-                    <span>A</span>
-                    <%= @schedule.tuesdayFinish.strftime('%R') %>
+                    <% if @schedule.tuesdayInit.strftime("%R") == "00:00" && @schedule.tuesdayFinish.strftime("%R") == "00:00" %>
+                        <span>CERRADO</span>
+                    <% else %>
+                        <%= @schedule.tuesdayInit.strftime('%R') %>
+                        <span>A</span>
+                        <%= @schedule.tuesdayFinish.strftime('%R') %>
+                    <% end %>
                 </td>
                 <td class="py-4 px-6">
+                <% if @schedule.wednesdayInit.strftime("%R") == "00:00" && @schedule.wednesdayFinish.strftime("%R") == "00:00" %>
+                        <span>CERRADO</span>
+                    <% else %>
                     <%= @schedule.wednesdayInit.strftime('%R') %>
                     <span>A</span>
                     <%= @schedule.wednesdayFinish.strftime('%R') %>
+                    <% end %>
                 </td>
                 <td class="py-4 px-6">
+                <% if @schedule.thursdayInit.strftime("%R") == "00:00" && @schedule.thursdayFinish.strftime("%R") == "00:00" %>
+                        <span>CERRADO</span>
+                    <% else %>
                     <%= @schedule.thursdayInit.strftime('%R') %>
                     <span>A</span>
                     <%= @schedule.thursdayFinish.strftime('%R') %>
+                    <% end %>
                 </td>
                 <td class="py-4 px-6">
+                <% if @schedule.fridayInit.strftime("%R") == "00:00" && @schedule.fridayFinish.strftime("%R") == "00:00" %>
+                        <span>CERRADO</span>
+                    <% else %>
                     <%= @schedule.fridayInit.strftime('%R') %>
                     <span>A</span>
                     <%= @schedule.fridayFinish.strftime('%R') %>
+                    <% end %>
                 </td>
                 <td class="py-4 px-6">
+                <% if @schedule.saturdayInit.strftime("%R") == "00:00" && @schedule.saturdayFinish.strftime("%R") == "00:00" %>
+                        <span>CERRADO</span>
+                    <% else %>
                     <%= @schedule.saturdayInit.strftime('%R') %>
                     <span>A</span>
                     <%= @schedule.saturdayFinish.strftime('%R') %>
+                    <% end %>
                 </td>
                 <td class="py-4 px-6">
+                <% if @schedule.sundayInit.strftime("%R") == "00:00" && @schedule.sundayFinish.strftime("%R") == "00:00" %>
+                        <span>CERRADO</span>
+                    <% else %>
                     <%= @schedule.sundayInit.strftime('%R') %>
                     <span>A</span>
                     <%= @schedule.sundayFinish.strftime('%R') %>
+                    <% end %>
                 </td>
                 <td class="py-4 px-6">
                     <% if current_user.admin? %>
