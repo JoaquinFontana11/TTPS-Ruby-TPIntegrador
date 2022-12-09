@@ -17,9 +17,10 @@ class BranchofficesController < ApplicationController
       message = validateBranchOfficeInputs
       if !message
         $branch_office_params = params[:branchOffice]
-        redirect_to schedule_new_path
+        redirect_to schedule_new_path and return
       else
-        redirect_to branchoffice_new_path, alert: message
+        flash[:alert] = message
+        redirect_to branchoffice_new_path and return
       end
   end
 
@@ -33,12 +34,15 @@ class BranchofficesController < ApplicationController
     if !message
       @branch_office = BranchOffice.find(params[:id])
       if @branch_office.update(branchoffice_params)
-        redirect_to branchoffices_home_path, notice: "Se modifico correctamente la Sucursal"
+        flash[:notice] =  "Se modifico correctamente la Sucursal"
+        redirect_to branchoffices_home_path and return
       else
-        redirect_to branchoffice_edit_path, alert: 'Ha ocurrido un error al modificar la sucursal'
+        flash[:alert] = 'Ha ocurrido un error al modificar la sucursal'
+        redirect_to branchoffice_edit_path and return
       end
     else
-      redirect_to branchoffice_edit_path, alert: message
+      flash[:alert] = message
+      redirect_to branchoffice_edit_path and return
     end
   end
 
@@ -49,9 +53,11 @@ class BranchofficesController < ApplicationController
           @branch_office = BranchOffice.find(params[:format])
           @schedule = @branch_office.schedule
           if @schedule.destroy
-            redirect_to branchoffices_home_path , notice: "Se elimino la Sucursal Correctamente"
+            flash[:notice] = "Se elimino la Sucursal Correctamente"
+            redirect_to branchoffices_home_path and return
           else
-            redirect_to branchoffices_home_path , alert: "Ocurrio un error al intentar destruir la Sucursal"
+            flash[:alert] = "Ocurrio un error al intentar destruir la Sucursal"
+            redirect_to branchoffices_home_path and return
           end
         else
           flash[:alert] = "La sucursal tiene turnos"
@@ -77,15 +83,19 @@ class BranchofficesController < ApplicationController
           $branch_office_params = nil
           @branch_office = @schedule.build_branch_office(branchoffice_params)
           if @branch_office.save
-            redirect_to branchoffices_home_path, notice: 'Se ha creado La Sucursal correctamente.'
+            flash[:notice] = 'Se creo la Sucursal correctamente.'
+            redirect_to branchoffices_home_path and return
           else
-            redirect_to branchoffice_new_path, alert: 'Ha ocurrido un error al crear la Sucursal'
+            flash[:alert] =  'Ha ocurrido un error al crear la Sucursal'
+            redirect_to branchoffice_new_path and return
           end
         else
-          redirect_to schedule_new_path, alert: 'Ha ocurrido un error al crear el Horario'
+          flash[:alert] =  'Ha ocurrido un error al crear el Horario'
+          redirect_to schedule_new_path and return
         end
       else
-        redirect_to schedule_new_path, alert: message
+        flash[:alert] =  message
+        redirect_to schedule_new_path and return
       end
   end
 
@@ -105,12 +115,15 @@ class BranchofficesController < ApplicationController
       if !message
         @schedule = Schedule.find(params[:format_id])
         if @schedule.update(schedule_params)
-          redirect_to branchoffices_home_path, notice: "Se ah modificado correctamente el Horario"
+          flash[:notice] =  "Se modifico correctamente el Horario"
+          redirect_to branchoffices_home_path, notice:
         else
-          redirect_to schedule_edit_path, alert: 'Ha ocurrido un error al modificar el horario'
+          flash[:alert] =  'Ha ocurrido un error al modificar el horario'
+          redirect_to schedule_edit_path and return
         end
       else
-        redirect_to schedule_edit_path, alert: message
+        flash[:alert] = message
+        redirect_to schedule_edit_path and return
       end
   end
   

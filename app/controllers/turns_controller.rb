@@ -1,6 +1,7 @@
 class TurnsController < ApplicationController
     load_and_authorize_resource
 
+    before_action :authenticate_user!
     def home
         if helpers.current_user.client?
             @turns = Turn.where(
@@ -12,8 +13,6 @@ class TurnsController < ApplicationController
               'branch_office_id = ?',
               helpers.current_user.branch_office
             ).group(:id)
-        #   else
-        #     @turns = Turn.all
           end
         render "turns/home"
     end
@@ -113,9 +112,6 @@ class TurnsController < ApplicationController
     end
 
     def attended
-        puts "------------------------------------"
-        puts params
-        puts "------------------------------------"
         message = validateAttendInputs
         if !message
             if Turn.find(params[:id])

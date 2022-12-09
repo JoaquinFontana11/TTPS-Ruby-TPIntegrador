@@ -23,22 +23,26 @@ class UsersController < ApplicationController
     def create
             message = validateUserInputs
             if !message
-                redirect_to new_user_path, alert: message 
                 @user = User.new(user_params)
                 if(params[:user][:role] == "staff")
-                    if !(BranchOffice.find(params[:branch_office]))
-                        redirect_to new_user_path, alert: "No existe la Sucursal Seleccionada"
+                    if (BranchOffice.find(params[:branch_office]))
+                        @branch_office = BranchOffice.find(params[:branch_office])
+                        @user.branch_office = @branch_office
+                    else
+                        flash[:alert] =  "No existe la Sucursal Seleccionada"
+                        redirect_to new_user_path and return
                     end
-                    @branch_office = BranchOffice.find(params[:branch_office])
-                    @user.branch_office = @branch_office
                 end
                 if @user.save
-                    redirect_to users_home_path, notice: "El usuario se creo correctamente"
+                    flash[:notice] = "El usuario se creo correctamente"
+                    redirect_to users_home_path and return
                 else
-                    redirect_to new_user_path, alert: "Algo salio mal al crear el usuario"
+                    flash[:alert] = "Algo salio mal al crear el usuario"
+                    redirect_to new_user_path and return
                 end
             else
-                redirect_to new_user_path, alert: message
+                flash[:alert] = message
+                redirect_to new_user_path and return
             end
     end
 
@@ -50,35 +54,42 @@ class UsersController < ApplicationController
     def update
             message = validateUserInputs
             if !message
-
-                if !(User.find(params[:id]))
-                    redirect_to user_edit_path, alert: "No se econtro el usuario"
-                end
-
-                @user = User.find(params[:id])
-                if(params[:user][:role] == "staff")
-                    if !(BranchOffice.find(params[:branch_office]))
-                        redirect_to user_edit_path, alert: "No existe la Sucursal Seleccionada"
+                if (User.find(params[:id]))
+                    @user = User.find(params[:id])
+                    if(params[:user][:role] == "staff")
+                        if (BranchOffice.find(params[:branch_office]))
+                            @branch_office = BranchOffice.find(params[:branch_office])
+                            @user.branch_office = @branch_office
+                        else
+                            flash[:alert] = "No existe la Sucursal Seleccionada"
+                            redirect_to user_edit_path and return
+                        end
                     end
-                    @branch_office = BranchOffice.find(params[:branch_office])
-                    @user.branch_office = @branch_office
-                end
-                if @user.update(user_params)
-                    redirect_to users_home_path, notice: "El usuario se modifico correctamente"
+                    if @user.update(user_params)
+                        flash[:notice] = "El usuario se modifico correctamente"
+                        redirect_to users_home_path and return
+                    else
+                        flash[:alert] =  "Algo salio mal al modificar el usuario"
+                        redirect_to user_edit_path and return
+                    end
                 else
-                    redirect_to user_edit_path, alert: "Algo salio mal al modificar el usuario"
+                    flash[:alert] =  "No se econtro el usuario"
+                    redirect_to user_edit_path and return
                 end
             else
-                redirect_to user_edit_path, alert: message
+                flash[:alert] = message
+                redirect_to user_edit_path and return
             end 
     end
 
     def destroy
         @user = User.find(params[:id])
         if @user.destroy
-            redirect_to users_home_path , notice: "Se elimino el Usuario Correctamente"
+            flash[:notice] = "Se elimino el Usuario Correctamente"
+            redirect_to users_home_path and return
         else
-            redirect_to users_home_path , alert: "Ocurrio un error al intentar destruir el Usuario"
+            flash[:alert] = "Ocurrio un error al intentar destruir el Usuario"
+            redirect_to users_home_path and return
         end
     end
 
@@ -90,18 +101,16 @@ class UsersController < ApplicationController
     def changePasword
         @user = User.find(params[:id])
         message = validatePasswordInputs
-        puts "----------------------------------"
-        puts message
-        puts "----------------------------------"
         if !message
             if @user.update_attribute(:password, params[:new_password])
-                message = "La contraseña se modifico con Exito"
+                flash[:notice] = "La contraseña se modifico con Exito"
             else
-                message = "Ocurrio un error al modificar la contraseña"
+                flash[:alert] = "Ocurrio un error al modificar la contraseña"
             end
-            redirect_to update_password_path(@user), notice: message
+            redirect_to update_password_path(@user) and return
         else
-            redirect_to update_password_path(@user), alert: message
+            flash[:alert] = message
+            redirect_to update_password_path(@user) and return
         end
 
     end
