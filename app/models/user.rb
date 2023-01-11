@@ -17,8 +17,8 @@ class User < ApplicationRecord
 
   belongs_to :branch_office, class_name: "BranchOffice" ,optional: true
 
-  has_many :turn, :foreign_key => "client_id"
-  has_many :trun, :foreign_key => "staff_attended_id"
+  has_many :turns, :foreign_key => "client_id"
+  has_many :turns, :foreign_key => "staff_attended_id"
 
   has_secure_password
 end

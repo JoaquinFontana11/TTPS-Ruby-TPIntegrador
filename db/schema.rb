@@ -15,44 +15,44 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_30_185215) do
   enable_extension "plpgsql"
 
   create_table "branch_offices", force: :cascade do |t|
-    t.string "name"
-    t.string "direc"
-    t.string "tel"
+    t.string "name", null: false
+    t.string "direc", null: false
+    t.string "tel", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "schedule_id"
+    t.bigint "schedule_id", null: false
     t.index ["schedule_id"], name: "index_branch_offices_on_schedule_id", unique: true
   end
 
   create_table "schedules", force: :cascade do |t|
-    t.time "mondayInit"
-    t.time "mondayFinish"
-    t.time "tuesdayInit"
-    t.time "tuesdayFinish"
-    t.time "wednesdayInit"
-    t.time "wednesdayFinish"
-    t.time "thursdayInit"
-    t.time "thursdayFinish"
-    t.time "fridayInit"
-    t.time "fridayFinish"
-    t.time "saturdayInit"
-    t.time "saturdayFinish"
-    t.time "sundayInit"
-    t.time "sundayFinish"
+    t.time "mondayInit", null: false
+    t.time "mondayFinish", null: false
+    t.time "tuesdayInit", null: false
+    t.time "tuesdayFinish", null: false
+    t.time "wednesdayInit", null: false
+    t.time "wednesdayFinish", null: false
+    t.time "thursdayInit", null: false
+    t.time "thursdayFinish", null: false
+    t.time "fridayInit", null: false
+    t.time "fridayFinish", null: false
+    t.time "saturdayInit", null: false
+    t.time "saturdayFinish", null: false
+    t.time "sundayInit", null: false
+    t.time "sundayFinish", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "turns", force: :cascade do |t|
-    t.date "date"
-    t.time "hour"
-    t.integer "state"
-    t.string "reason"
+    t.date "date", null: false
+    t.time "hour", null: false
+    t.integer "state", null: false
+    t.string "reason", null: false
     t.string "comment"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "branch_office_id"
-    t.bigint "client_id"
+    t.bigint "branch_office_id", null: false
+    t.bigint "client_id", null: false
     t.bigint "staff_attended_id"
     t.index ["branch_office_id"], name: "index_turns_on_branch_office_id"
     t.index ["client_id"], name: "index_turns_on_client_id"
@@ -60,9 +60,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_30_185215) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string "username"
-    t.string "password_digest"
-    t.string "role"
+    t.string "username", null: false
+    t.string "password_digest", null: false
+    t.string "role", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "branch_office_id"

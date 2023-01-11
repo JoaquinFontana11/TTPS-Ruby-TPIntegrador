@@ -24,6 +24,7 @@ class UsersController < ApplicationController
             message = validateUserInputs
             if !message
                 @user = User.new(user_params)
+                
                 if(params[:user][:role] == "staff")
                     if (BranchOffice.find(params[:branch_office]))
                         @branch_office = BranchOffice.find(params[:branch_office])
@@ -37,7 +38,9 @@ class UsersController < ApplicationController
                     flash[:notice] = "El usuario se creo correctamente"
                     redirect_to users_home_path and return
                 else
-                    flash[:alert] = "Algo salio mal al crear el usuario"
+                    @user.errors.full_messages.each do |msg|
+                        flash[:alert] = msg.split(" ",2)[1]
+                      end
                     redirect_to new_user_path and return
                 end
             else
@@ -52,8 +55,6 @@ class UsersController < ApplicationController
     end
 
     def update
-            message = validateUserInputs
-            if !message
                 if (User.find(params[:id]))
                     @user = User.find(params[:id])
                     if(params[:user][:role] == "staff")
@@ -69,17 +70,15 @@ class UsersController < ApplicationController
                         flash[:notice] = "El usuario se modifico correctamente"
                         redirect_to users_home_path and return
                     else
-                        flash[:alert] =  "Algo salio mal al modificar el usuario"
+                        @user.errors.full_messages.each do |msg|
+                            flash[:alert] = msg.split(" ",2)[1]
+                          end
                         redirect_to user_edit_path and return
                     end
                 else
                     flash[:alert] =  "No se econtro el usuario"
                     redirect_to user_edit_path and return
                 end
-            else
-                flash[:alert] = message
-                redirect_to user_edit_path and return
-            end 
     end
 
     def destroy
@@ -138,21 +137,6 @@ class UsersController < ApplicationController
             return "Las Contraseñas no Coinciden"
         elsif (params[:new_password] == params[:password])
             return "La nueva contraseña no puede ser igual a la Anterior"
-        end
-        return false
-    end
-
-    def validateUserInputs
-        if !(params.has_key?(:authenticity_token))
-            return "Estas intentando ingresar por donde no deberias"
-        elsif !(params.has_key?(:user) && params[:user].has_key?(:username) && params[:user].has_key?(:password) && params[:user].has_key?(:role))
-            return "Te falta Ingresar algun Dato"
-        elsif (params[:user][:role] == "staff" && !(params.has_key?(:branch_office)))
-            return "Falta ingresar Sucursal"
-        elsif !(params[:user][:username] != "" && params[:user][:password] != "" && params[:user][:role] != "")
-            return "Debe Completar todos los campos"
-        elsif (params[:user][:role] == "staff" && params[:branch_office] == "")
-            return "Debe completar la Sucursal"
         end
         return false
     end

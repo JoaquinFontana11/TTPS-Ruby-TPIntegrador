@@ -14,14 +14,8 @@ class BranchofficesController < ApplicationController
   end
 
   def create
-      message = validateBranchOfficeInputs
-      if !message
-        $branch_office_params = params[:branchOffice]
-        redirect_to schedule_new_path and return
-      else
-        flash[:alert] = message
-        redirect_to branchoffice_new_path and return
-      end
+    $branch_office_params = params[:branchOffice]
+    redirect_to schedule_new_path and return
   end
 
   def edit
@@ -30,20 +24,18 @@ class BranchofficesController < ApplicationController
   end
 
   def update
-    message = validateBranchOfficeInputs
-    if !message
-      @branch_office = BranchOffice.find(params[:id])
-      if @branch_office.update(branchoffice_params)
-        flash[:notice] =  "Se modifico correctamente la Sucursal"
-        redirect_to branchoffices_home_path and return
-      else
-        flash[:alert] = 'Ha ocurrido un error al modificar la sucursal'
-        redirect_to branchoffice_edit_path and return
-      end
+    @branch_office = BranchOffice.find(params[:id])
+    if @branch_office.update(branchoffice_params)
+      flash[:notice] =  "Se modifico correctamente la Sucursal"
+      redirect_to branchoffices_home_path and return
     else
-      flash[:alert] = message
+      @branch_office.errors.full_messages.each do |msg|
+        flash[:alert] = msg.split(" ",2)[1]
+      end
       redirect_to branchoffice_edit_path and return
     end
+      # flash[:alert] = message
+      # redirect_to branchoffice_edit_path and return
   end
 
   def destroy
@@ -60,7 +52,9 @@ class BranchofficesController < ApplicationController
             flash[:notice] = "Se elimino la Sucursal Correctamente"
             redirect_to branchoffices_home_path and return
           else
-            flash[:alert] = "Ocurrio un error al intentar destruir la Sucursal"
+            @schedule.errors.full_messages.each do |msg|
+              flash[:alert] = msg.split(" ",2)[1]
+            end
             redirect_to branchoffices_home_path and return
           end
         else
@@ -79,28 +73,26 @@ class BranchofficesController < ApplicationController
   end
 
   def create_schedule
-      message = validateScheduleInputs
-      if !message
-        @schedule = Schedule.new(schedule_params)
-        if @schedule.save
-          params[:branchOffice] = $branch_office_params
-          $branch_office_params = nil
-          @branch_office = @schedule.build_branch_office(branchoffice_params)
-          if @branch_office.save
-            flash[:notice] = 'Se creo la Sucursal correctamente.'
-            redirect_to branchoffices_home_path and return
-          else
-            flash[:alert] =  'Ha ocurrido un error al crear la Sucursal'
-            redirect_to branchoffice_new_path and return
-          end
-        else
-          flash[:alert] =  'Ha ocurrido un error al crear el Horario'
-          redirect_to schedule_new_path and return
-        end
+    @schedule = Schedule.new(schedule_params)
+    if @schedule.save
+      params[:branchOffice] = $branch_office_params
+      $branch_office_params = nil
+      @branch_office = @schedule.build_branch_office(branchoffice_params)
+      if @branch_office.save
+        flash[:notice] = 'Se creo la Sucursal correctamente.'
+        redirect_to branchoffices_home_path and return
       else
-        flash[:alert] =  message
-        redirect_to schedule_new_path and return
+        @branch_office.errors.full_messages.each do |msg|
+          flash[:alert] = msg.split(" ",2)[1]
+        end
+        redirect_to branchoffice_new_path and return
       end
+    else
+      @schedule.errors.full_messages.each do |msg|
+        flash[:alert] = msg.split(" ",2)[1]
+      end
+      redirect_to schedule_new_path and return
+    end
   end
 
   def view_schedule
@@ -115,20 +107,18 @@ class BranchofficesController < ApplicationController
   end
 
   def update_schedule
-      message = validateScheduleInputs
-      if !message
-        @schedule = Schedule.find(params[:id])
-        if @schedule.update(schedule_params)
-          flash[:notice] =  "Se modifico correctamente el Horario"
-          redirect_to branchoffices_home_path and return
-        else
-          flash[:alert] =  'Ha ocurrido un error al modificar el horario'
-          redirect_to schedule_edit_path and return
-        end
-      else
-        flash[:alert] = message
-        redirect_to schedule_edit_path and return
+    @schedule = Schedule.find(params[:id])
+    if @schedule.update(schedule_params)
+      flash[:notice] =  "Se modifico correctamente el Horario"
+      redirect_to branchoffices_home_path and return
+    else
+       @schedule.errors.full_messages.each do |msg|
+        flash[:alert] = msg.split(" ",2)[1]
       end
+      edirect_to schedule_edit_path and return
+    end
+        # flash[:alert] = message
+        # redirect_to schedule_edit_path and return
   end
   
   private
@@ -139,31 +129,4 @@ class BranchofficesController < ApplicationController
   def schedule_params
     params.require(:schedule).permit(:mondayInit,:mondayFinish,:tuesdayInit,:tuesdayFinish ,:wednesdayInit,:wednesdayFinish ,:thursdayInit,:thursdayFinish ,:fridayInit,:fridayFinish ,:saturdayInit,:saturdayFinish ,:sundayInit,:sundayFinish)
   end
-
-
-  def validateScheduleInputs
-    if !(params.has_key?(:authenticity_token))
-      return "Estas intentando ingresar por donde no deberias..."
-
-    elsif !(params.has_key?(:schedule) && params[:schedule].has_key?(:mondayInit) && params[:schedule].has_key?(:mondayFinish) && params[:schedule].has_key?(:tuesdayInit) && params[:schedule].has_key?(:tuesdayFinish) && params[:schedule].has_key?(:wednesdayInit) && params[:schedule].has_key?(:wednesdayFinish) && params[:schedule].has_key?(:thursdayInit) && params[:schedule].has_key?(:thursdayFinish) && params[:schedule].has_key?(:fridayInit) && params[:schedule].has_key?(:fridayFinish) && params[:schedule].has_key?(:saturdayInit) && params[:schedule].has_key?(:saturdayFinish) && params[:schedule].has_key?(:sundayInit) && params[:schedule].has_key?(:sundayFinish))
-      return "Te falta Ingresar algun Dato"
-    elsif !(params[:schedule][:mondayInit] != "" && params[:schedule][:mondayFinish] != "" && params[:schedule][:tuesdayInit] != "" && params[:schedule][:tuesdayFinish] != "" && params[:schedule][:wednesdayInit] != "" && params[:schedule][:wednesdayFinish] != "" && params[:schedule][:thursdayInit] != "" && params[:schedule][:thursdayFinish] != "" && params[:schedule][:fridayInit] != "" && params[:schedule][:fridayFinish] != "" && params[:schedule][:saturdayInit] != "" && params[:schedule][:saturdayFinish] != "" && params[:schedule][:sundayInit] != "" && params[:schedule][:sundayFinish] != "")
-      return "Debe completar todos los campos"
-    elsif ((params[:schedule][:mondayInit] <= params[:schedule][:mondayFinish]) && (params[:schedule][:tuesdayInit] <= params[:schedule][:tuesdayFinish]) && (params[:schedule][:wednesdayInit] <= params[:schedule][:wednesdayFinish]) && (params[:schedule][:thursdayInit] <= params[:schedule][:thursdayFinish]) && (params[:schedule][:fridayInit] <= params[:schedule][:fridayFinish]) && (params[:schedule][:saturdayInit] <= params[:schedule][:saturdayFinish]) && (params[:schedule][:sundayInit] <= params[:schedule][:sundayFinish]))
-      return false
-    end
-    return "La hora de Fin no puede ser menor a la de Inicio"
-  end
-
-  def validateBranchOfficeInputs
-    if !(params.has_key?(:authenticity_token))
-      return "Estas intentando ingresar por donde no deberias..."
-    elsif !(params.has_key?(:branchOffice) && params[:branchOffice].has_key?(:name) && params[:branchOffice].has_key?(:direc) && params[:branchOffice].has_key?(:tel))
-      return "Te falta Ingresar algun Dato"
-    elsif !(params[:branchOffice][:name] != "" && params[:branchOffice][:direc] != ""  && params[:branchOffice][:tel] != "")
-      return "Debe completar todos los campos"
-  end
-    return false
-  end
-
 end
