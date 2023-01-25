@@ -23,6 +23,13 @@ Decisiones de diseño que considero importantes:
 
 - Un administrador puede crear clientes,personal bancario y administradores, y no solo personal bancario y administradores
 
+- Un administrador no puede cambiar la contraseña de ningun usuario
+
+- La verificacion de constraseña a la hora de cambiarla esta en el controlador, estas verificaciones son:
+  1.  Que la nueva contraseña no sea igual a la anterior
+  2.  Que la contraseña actual sea correcta
+  3.  Que la nueva contraseña y la confirmacion de la misma sean iguales
+
 Pasos para iniciar la aplicacion:
 
 1. Clonar el repositorio TTPS-Ruby-TpIntegrador a alguna carpeta

@@ -34,8 +34,6 @@ class BranchofficesController < ApplicationController
       end
       redirect_to branchoffice_edit_path and return
     end
-      # flash[:alert] = message
-      # redirect_to branchoffice_edit_path and return
   end
 
   def destroy
@@ -117,8 +115,6 @@ class BranchofficesController < ApplicationController
       end
       edirect_to schedule_edit_path and return
     end
-        # flash[:alert] = message
-        # redirect_to schedule_edit_path and return
   end
   
   private

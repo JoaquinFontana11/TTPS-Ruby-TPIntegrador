@@ -2,9 +2,11 @@
     <div class="mb-6">
             Nombre: <%= form.text_field :username, value: user.username %>
     </div>
+    <% if url == "/users" %>
     <div class="mb-6">
         Contraseña: <%= form.text_field :password , value: user.password %>
     </div>
+    <% end %>
     <div data-controller="form-element">
         <%= form.button "Validar", formaction: new_user_path, formmethod: :get, data: {turbo_frame: :branch_office_field, form_element_target: "validate_staff"} %>
         <div class="mb-6">
